@@ -1,0 +1,40 @@
+plugins {
+	id 'org.springframework.boot' version '2.5.5'
+	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+	id 'java'
+	id 'application'
+	id 'com.palantir.docker' version '0.29.0'
+}
+
+group = 'com.rozbit.gifservice'
+version = '0.1'
+sourceCompatibility = '11'
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'junit:junit:4.13.1'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	implementation group: 'org.springframework.cloud', name: 'spring-cloud-starter-openfeign', version: '3.0.4'
+	compileOnly 'org.projectlombok:lombok:1.18.20'
+	annotationProcessor 'org.projectlombok:lombok:1.18.20'
+}
+
+jar {
+	mainClassName = 'com.rozbit.gifservice.GifServiceApplication'
+	archivesBaseName = 'gif-service'
+}
+
+
+test {
+	useJUnitPlatform()
+}
+
+docker {
+	name 'gif-service'
+	tags 'latest'
+	files 'gif-service-0.1.jar'
+}
